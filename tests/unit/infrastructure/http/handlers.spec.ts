@@ -36,7 +36,7 @@ describe('HTTP infrastructure', () => {
         const logger: Logger = { debug: vi.fn(), error: vi.fn(), info: vi.fn(), warn: vi.fn() };
         const handler: ReturnType<typeof createErrorHandler> = createErrorHandler(logger);
         const response: Response = createResponseDouble();
-        const result: z.SafeParseReturnType<{ name: string; }, { name: string; }> = z.object({ name: z.string() }).safeParse({ name: 10 });
+        const result = z.object({ name: z.string() }).safeParse({ name: 10 });
 
         if (result.success) {
             throw new Error('Expected zod parsing to fail');

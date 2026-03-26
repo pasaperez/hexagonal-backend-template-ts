@@ -1,4 +1,4 @@
-import { z } from 'zod';
+import {z} from 'zod';
 
 export interface Environment {
     NODE_ENV: 'development' | 'test' | 'production';
@@ -9,7 +9,7 @@ export interface Environment {
     APP_VERSION: string;
 }
 
-const environmentSchema: z.ZodObject<z.ZodRawShape, 'strip', z.ZodTypeAny, Environment, Record<string, unknown>> = z.object({
+const environmentSchema: z.ZodType<Environment> = z.object({
     NODE_ENV: z.enum(['development', 'test', 'production']).default('development'),
     HOST: z.string().min(1).default('0.0.0.0'),
     PORT: z.coerce.number().int().positive().default(3000),

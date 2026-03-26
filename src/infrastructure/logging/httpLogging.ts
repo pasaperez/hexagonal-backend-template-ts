@@ -10,7 +10,7 @@ type SerializableHttpRequest = {
     id?: unknown;
     method?: string;
     originalUrl?: string;
-    params?: Record<string, string>;
+    params?: Record<string, string | string[]>;
     query?: Record<string, unknown>;
     socket?: { remoteAddress?: string | undefined; };
     url?: string;

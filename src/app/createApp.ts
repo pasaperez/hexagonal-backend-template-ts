@@ -1,5 +1,5 @@
 import express, { type Express, type Request, type Response } from 'express';
-import pinoHttp from 'pino-http';
+import pinoHttp, { type Options as PinoHttpOptions } from 'pino-http';
 import { asyncHandler } from '../infrastructure/http/asyncHandler';
 import { createErrorHandler } from '../infrastructure/http/errorHandler';
 import { buildEndpointCatalog, type HttpMethod, type HttpModule, type HttpRequest, type HttpResponse, joinHttpPaths } from '../infrastructure/http/HttpModule';
@@ -17,26 +17,25 @@ export function createApp<TModules>({ container, createHttpModules }: CreateAppO
     const httpModules: HttpModule[] = createHttpModules(container.modules);
     const httpLogger: typeof container.logger = container.logger.child({ component: 'http' });
     const verboseHttpLogs: boolean = shouldLogVerboseHttp(container.env.LOG_LEVEL);
+    const httpLoggerOptions: PinoHttpOptions<Request, Response> = {
+        customErrorObject: (request: Request, response: Response, error: Error, value: Record<string, unknown>) =>
+            buildHttpErrorObject(request, response, error, value, verboseHttpLogs),
+        customErrorMessage: formatHttpErrorMessage,
+        customLogLevel: resolveHttpLogLevel,
+        customSuccessObject: (request: Request, response: Response, value: Record<string, unknown>) =>
+            buildHttpSuccessObject(request, response, value, verboseHttpLogs),
+        customSuccessMessage: formatHttpSuccessMessage,
+        logger: httpLogger.toPino(),
+        quietReqLogger: true,
+        quietResLogger: true,
+        serializers: {
+            req: (request: Request): Record<string, unknown> => serializeHttpRequest(request, verboseHttpLogs),
+            res: (response: Response): Record<string, unknown> => serializeHttpResponse(response, verboseHttpLogs)
+        }
+    };
 
     app.disable('x-powered-by');
-    app.use(
-        pinoHttp<Request, Response>({
-            customErrorObject: (request: Request, response: Response, error: Error, value: Record<string, unknown>) =>
-                buildHttpErrorObject(request, response, error, value, verboseHttpLogs),
-            customErrorMessage: formatHttpErrorMessage,
-            customLogLevel: resolveHttpLogLevel,
-            customSuccessObject: (request: Request, response: Response, value: Record<string, unknown>) =>
-                buildHttpSuccessObject(request, response, value, verboseHttpLogs),
-            customSuccessMessage: formatHttpSuccessMessage,
-            logger: httpLogger.toPino(),
-            quietReqLogger: true,
-            quietResLogger: true,
-            serializers: {
-                req: (request: Request): Record<string, unknown> => serializeHttpRequest(request, verboseHttpLogs),
-                res: (response: Response): Record<string, unknown> => serializeHttpResponse(response, verboseHttpLogs)
-            }
-        })
-    );
+    app.use(pinoHttp(httpLoggerOptions));
     if (verboseHttpLogs) {
         app.use(createVerboseHttpBodyCaptureMiddleware());
     }

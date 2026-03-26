@@ -2,10 +2,11 @@ import { afterEach, describe, expect, it, vi } from 'vitest';
 import type { Environment } from '../../src/infrastructure/config/env';
 
 type Spy = ReturnType<typeof vi.fn>;
+type LoggerMethod = ReturnType<typeof vi.fn<(message: string, meta?: Record<string, unknown>) => void>>;
 
 interface LoggerDouble {
-    error: Spy;
-    info: Spy;
+    error: LoggerMethod;
+    info: LoggerMethod;
 }
 
 const testEnvironment: Environment = {
@@ -24,7 +25,7 @@ describe('main bootstrap', () => {
     });
 
     it('boots the application and shuts it down gracefully', async () => {
-        const logger: LoggerDouble = { error: vi.fn(), info: vi.fn() };
+        const logger: LoggerDouble = { error: vi.fn<(message: string, meta?: Record<string, unknown>) => void>(), info: vi.fn() };
         const stop: Spy = vi.fn((): Promise<void> => Promise.resolve());
         const signalHandlers: Map<string, () => void> = new Map<string, () => void>();
         const exitSpy = vi.spyOn(process, 'exit').mockImplementation(
@@ -69,7 +70,7 @@ describe('main bootstrap', () => {
     });
 
     it('exits with code 1 when server shutdown fails', async () => {
-        const logger: LoggerDouble = { error: vi.fn(), info: vi.fn() };
+        const logger: LoggerDouble = { error: vi.fn<(message: string, meta?: Record<string, unknown>) => void>(), info: vi.fn() };
         const stop: Spy = vi.fn((): Promise<void> => Promise.reject(new Error('close failure')));
         const signalHandlers: Map<string, () => void> = new Map<string, () => void>();
         const exitSpy = vi.spyOn(process, 'exit').mockImplementation(
@@ -110,7 +111,7 @@ describe('main bootstrap', () => {
     });
 
     it('stringifies non-error shutdown failures', async () => {
-        const logger: LoggerDouble = { error: vi.fn(), info: vi.fn() };
+        const logger: LoggerDouble = { error: vi.fn<(message: string, meta?: Record<string, unknown>) => void>(), info: vi.fn() };
         const stop: Spy = vi.fn((): Promise<void> =>
             new Promise<void>((_resolve: () => void, reject: (reason: string) => void): void => {
                 // eslint-disable-next-line @typescript-eslint/prefer-promise-reject-errors
