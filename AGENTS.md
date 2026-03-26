@@ -99,6 +99,7 @@ If you add environment variables:
 
 - Unit tests live in `tests/unit`.
 - Integration tests live in `tests/integration`.
+- CI validates both Node.js and Bun. Keep both paths green when changing dependencies or runtime-sensitive code.
 - After code changes, run at least `bun run build` and `bun run lint` when Bun is available.
 - If behavior changes, add or update tests and run `bun run test`.
 - If coverage is affected, keep `bun run test:coverage` green.

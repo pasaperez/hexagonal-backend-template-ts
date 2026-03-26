@@ -18,6 +18,7 @@ Node compatibility is intentionally preserved so the template stays broadly reus
 - Complete working `users` example
 - Operational `health` endpoint, separated from business modules
 - Unit and integration tests with `vitest` and `supertest`
+- GitHub Actions CI validating both Node.js and Bun
 - `Dockerfile`, GitHub Actions CI, ESLint, and dprint
 
 ## Stack
@@ -115,6 +116,7 @@ npm run dev:node
 ```
 
 `npm run dev:node` and `npm run start:node` run on Node.js and therefore use the Express adapter.
+`package-lock.json`and `bun.lock` are intentionally not tracked.
 
 Available scripts:
 
@@ -203,6 +205,7 @@ La compatibilidad con Node se mantiene para que el template sea más universal, 
 - Ejemplo funcional completo con `users`
 - Endpoint operativo `health`, separado del área de negocio
 - Tests unitarios e integración con `vitest` y `supertest`
+- GitHub Actions CI validando tanto Node.js como Bun
 - `Dockerfile`, CI de GitHub Actions, ESLint y dprint
 
 ## Stack
@@ -300,6 +303,7 @@ npm run dev:node
 ```
 
 `npm run dev:node` y `npm run start:node` corren sobre Node.js y por eso usan el adapter de Express.
+`package-lock.json` y `bun.lock` estan intencionalmente fuera de control de versiones.
 
 Scripts disponibles:
 
