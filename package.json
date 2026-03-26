@@ -45,7 +45,7 @@
         "@typescript-eslint/parser": "^8.57.2",
         "@vitest/coverage-v8": "^4.1.1",
         "dprint": "^0.53.0",
-        "eslint": "9.26.0",
+        "eslint": "10.1.0",
         "supertest": "^7.0.0",
         "tsx": "^4.19.3",
         "typescript": "^5.8.2",
