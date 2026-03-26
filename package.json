@@ -1,0 +1,54 @@
+{
+    "name": "hexagonal-backend-template-ts",
+    "version": "1.0.0",
+    "description": "Reusable backend template with hexagonal architecture in TypeScript, Bun-native by default with Express fallback on Node.js",
+    "private": false,
+    "author": {
+        "name": "Angel Santiago Perez",
+        "email": "pasaperez@yahoo.com.ar",
+        "url": "https://github.com/pasaperez"
+    },
+    "license": "Apache-2.0",
+    "homepage": "https://github.com/pasaperez/hexagonal-backend-template-ts",
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/pasaperez/hexagonal-backend-template-ts.git"
+    },
+    "engines": {
+        "node": ">=20.0.0"
+    },
+    "scripts": {
+        "dev": "bun --watch src/main.ts",
+        "dev:node": "tsx watch src/main.ts",
+        "build": "tsc -p tsconfig.build.json",
+        "start": "bun dist/main.js",
+        "start:node": "node dist/main.js",
+        "test": "vitest run",
+        "test:watch": "vitest",
+        "test:coverage": "vitest run --coverage",
+        "lint": "eslint . --ext .ts",
+        "format": "dprint check",
+        "format:write": "dprint fmt"
+    },
+    "dependencies": {
+        "dotenv": "^16.4.7",
+        "express": "^4.21.2",
+        "pino": "^9.7.0",
+        "pino-http": "^10.4.0",
+        "zod": "^3.24.2"
+    },
+    "devDependencies": {
+        "@types/express": "^4.17.21",
+        "@types/node": "^22.13.10",
+        "@types/supertest": "^6.0.3",
+        "@typescript-eslint/eslint-plugin": "^8.26.1",
+        "@typescript-eslint/parser": "^8.26.1",
+        "@vitest/coverage-v8": "^3.0.8",
+        "dprint": "^0.53.0",
+        "eslint": "9.26.0",
+        "supertest": "^7.0.0",
+        "tsx": "^4.19.3",
+        "typescript": "^5.8.2",
+        "vitest": "^3.0.8"
+    }
+}
