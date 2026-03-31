@@ -1,6 +1,7 @@
 import type { Express } from 'express';
 import request from 'supertest';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import type * as CreateAppModuleType from '../../../src/app/createApp';
 import type { AppContainer } from '../../../src/app/createContainer';
 import type { Environment } from '../../../src/infrastructure/config/env';
 import type { HttpModule, HttpRequest, HttpResponse } from '../../../src/infrastructure/http/HttpModule';
@@ -69,6 +70,7 @@ type PinoHttpOptions = Record<string, unknown> & {
         res: (response: HttpResponseDouble) => Record<string, unknown>;
     };
 };
+type CreateAppModule = typeof CreateAppModuleType;
 
 const baseEnvironment: Environment = {
     APP_NAME: 'hexagonal-backend-template-ts',
@@ -136,6 +138,10 @@ function createExpressResponseDouble(): ExpressResponseDouble {
     };
 }
 
+async function importCreateAppModule(): Promise<CreateAppModule> {
+    return (await import('../../../src/app/createApp')) as CreateAppModule;
+}
+
 describe('createApp', () => {
     afterEach(() => {
         vi.restoreAllMocks();
@@ -147,8 +153,8 @@ describe('createApp', () => {
 
         vi.doMock('pino-http', () => ({ default: pinoHttpMock }));
 
-        const { createApp } = await import('../../../src/app/createApp');
-        const app = createApp({
+        const createAppModule: CreateAppModule = await importCreateAppModule();
+        const app = createAppModule.createApp({
             container: {
                 env: { ...baseEnvironment, LOG_LEVEL: 'debug' },
                 logger: PinoLogger.create('silent', 'hexagonal-backend-template-ts'),
@@ -220,8 +226,8 @@ describe('createApp', () => {
 
         vi.doMock('pino-http', () => ({ default: pinoHttpMock }));
 
-        const { createApp } = await import('../../../src/app/createApp');
-        createApp({
+        const createAppModule: CreateAppModule = await importCreateAppModule();
+        createAppModule.createApp({
             container: {
                 env: { ...baseEnvironment, LOG_LEVEL: 'info' },
                 logger: PinoLogger.create('silent', 'hexagonal-backend-template-ts'),
@@ -250,13 +256,13 @@ describe('createApp', () => {
 
         vi.doMock('pino-http', () => ({ default: pinoHttpMock }));
 
-        const { createApp } = await import('../../../src/app/createApp');
+        const createAppModule: CreateAppModule = await importCreateAppModule();
         const container: AppContainer<Record<string, never>> = {
             env: { ...baseEnvironment, LOG_LEVEL: 'silent' },
             logger: PinoLogger.create('silent', 'hexagonal-backend-template-ts'),
             modules: {}
         };
-        const app: Express = createApp({
+        const app: Express = createAppModule.createApp({
             container,
             createHttpModules:
                 (): HttpModule[] => [{
@@ -310,8 +316,8 @@ describe('createApp', () => {
 
         vi.doMock('pino-http', () => ({ default: pinoHttpMock }));
 
-        const { createApp } = await import('../../../src/app/createApp');
-        const app: Express = createApp({
+        const createAppModule: CreateAppModule = await importCreateAppModule();
+        const app: Express = createAppModule.createApp({
             container: {
                 env: { ...baseEnvironment, LOG_LEVEL: 'silent' },
                 logger: PinoLogger.create('silent', 'hexagonal-backend-template-ts'),

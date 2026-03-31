@@ -1,11 +1,13 @@
 import type { Express } from 'express';
 import { afterEach, describe, expect, it, vi } from 'vitest';
+import type * as StartHttpServerModuleType from '../../../src/app/startHttpServer';
 import type { AppContainer } from '../../../src/app/createContainer';
 import type { Environment } from '../../../src/infrastructure/config/env';
 import type { HttpModule } from '../../../src/infrastructure/http/HttpModule';
 import { PinoLogger } from '../../../src/infrastructure/logging/PinoLogger';
 
 type Spy = ReturnType<typeof vi.fn>;
+type StartHttpServerModule = typeof StartHttpServerModuleType;
 
 const logger: PinoLogger = PinoLogger.create('silent', 'hexagonal-backend-template-ts');
 const createHttpModules = (): HttpModule[] => [];
@@ -18,6 +20,10 @@ const env: Environment = {
     PORT: 3000
 };
 const container: AppContainer<Record<string, never>> = { env, logger, modules: {} };
+
+async function importStartHttpServerModule(): Promise<StartHttpServerModule> {
+    return (await import('../../../src/app/startHttpServer')) as StartHttpServerModule;
+}
 
 describe('startHttpServer', () => {
     afterEach(() => {
@@ -37,10 +43,10 @@ describe('startHttpServer', () => {
         vi.doMock('../../../src/app/createApp', () => ({ createApp }));
         vi.doMock('../../../src/app/createBunServer', () => ({ getBunRuntime: vi.fn(() => undefined), startBunServer: vi.fn() }));
 
-        const { isBunRuntime, startHttpServer } = await import('../../../src/app/startHttpServer');
-        const server = await startHttpServer({ container, createHttpModules });
+        const startHttpServerModule: StartHttpServerModule = await importStartHttpServerModule();
+        const server = await startHttpServerModule.startHttpServer({ container, createHttpModules });
 
-        expect(isBunRuntime()).toBe(false);
+        expect(startHttpServerModule.isBunRuntime()).toBe(false);
         expect(createApp).toHaveBeenCalled();
         expect(listen).toHaveBeenCalledWith(3000, '127.0.0.1', expect.any(Function));
 
@@ -57,10 +63,10 @@ describe('startHttpServer', () => {
         vi.doMock('../../../src/app/createApp', () => ({ createApp: vi.fn() }));
         vi.doMock('../../../src/app/createBunServer', () => ({ getBunRuntime: vi.fn(() => ({ serve: vi.fn() })), startBunServer }));
 
-        const { isBunRuntime, startHttpServer } = await import('../../../src/app/startHttpServer');
-        const server = await startHttpServer({ container, createHttpModules });
+        const startHttpServerModule: StartHttpServerModule = await importStartHttpServerModule();
+        const server = await startHttpServerModule.startHttpServer({ container, createHttpModules });
 
-        expect(isBunRuntime()).toBe(true);
+        expect(startHttpServerModule.isBunRuntime()).toBe(true);
         expect(startBunServer).toHaveBeenCalledWith({ container, createHttpModules });
         expect(server).toBe(bunServer);
     });
@@ -77,8 +83,8 @@ describe('startHttpServer', () => {
         vi.doMock('../../../src/app/createApp', () => ({ createApp }));
         vi.doMock('../../../src/app/createBunServer', () => ({ getBunRuntime: vi.fn(() => undefined), startBunServer: vi.fn() }));
 
-        const { startHttpServer } = await import('../../../src/app/startHttpServer');
-        const server = await startHttpServer({ container, createHttpModules });
+        const startHttpServerModule: StartHttpServerModule = await importStartHttpServerModule();
+        const server = await startHttpServerModule.startHttpServer({ container, createHttpModules });
 
         await expect(server.stop()).rejects.toThrow('close failure');
     });
