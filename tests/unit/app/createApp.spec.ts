@@ -30,7 +30,7 @@ type ExpressRouteLayer = {
     route?: { path: string; stack: Array<{ handle: (request: unknown, response: unknown, next: ExpressNext) => void; }>; };
 };
 type ExpressRouterDouble = { stack: ExpressRouteLayer[]; };
-type ExpressAppDouble = { _router: ExpressRouterDouble; };
+type ExpressAppDouble = { _router?: ExpressRouterDouble; router?: ExpressRouterDouble; };
 type ExpressRequestDouble = {
     body?: unknown;
     headers: Record<string, string | string[] | undefined>;
@@ -102,8 +102,13 @@ function getPinoHttpOptions(pinoHttpMock: ReturnType<typeof createPinoHttpMock>)
 
 function getExpressRouteLayers(app: Express): ExpressRouteLayer[] {
     const expressApp: ExpressAppDouble = app as unknown as ExpressAppDouble;
+    const router: ExpressRouterDouble | undefined = expressApp.router ?? expressApp._router;
 
-    return expressApp._router.stack;
+    if (!router) {
+        throw new Error('Expected Express router stack to exist');
+    }
+
+    return router.stack;
 }
 
 function createExpressResponseDouble(): ExpressResponseDouble {
