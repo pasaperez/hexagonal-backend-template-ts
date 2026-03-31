@@ -59,10 +59,7 @@ export function serializeHttpRequest(request: SerializableHttpRequest, verbose: 
     if (request.method) {
         serializedRequest.method = request.method;
     }
-    const path: string = resolveHttpPath(request);
-    if (path.length > 0) {
-        serializedRequest.url = path;
-    }
+    serializedRequest.url = resolveHttpPath(request);
 
     if (!verbose) {
         return serializedRequest;

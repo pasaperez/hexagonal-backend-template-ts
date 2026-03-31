@@ -29,6 +29,11 @@ Preferred commands:
 - `bun run format`
 - `bun run format:write`
 
+Container packaging preference:
+
+- Prefer Bun-based Docker images for this repository unless a concrete compatibility requirement forces a Node image.
+- Keep Node.js support in the codebase and scripts, but do not switch the default container runtime back to Node without an explicit reason.
+
 Fallback commands:
 
 - `npm run dev:node`
@@ -45,6 +50,7 @@ Fallback commands:
 - Keep the `domain` / `application` / `infrastructure` / `app` structure.
 - Preserve Node portability unless the project explicitly decides to adopt Bun-only features.
 - Prefer Bun for local development, script execution, and fast validation when there is no reason to use Node/npm.
+- Prefer Bun for Docker build and runtime stages too, unless a specific deployment environment requires Node-based images.
 - Keep HTTP features expressed through runtime-agnostic `HttpModule` definitions so Bun and Express stay behaviorally aligned.
 - `domain` must not depend on frameworks, Express, environment variables, or concrete adapters.
 - `application` orchestrates use cases and depends on ports, not on infrastructure implementations.

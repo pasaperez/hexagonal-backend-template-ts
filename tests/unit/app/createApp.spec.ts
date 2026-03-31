@@ -33,7 +33,7 @@ type ExpressRouterDouble = { stack: ExpressRouteLayer[]; };
 type ExpressAppDouble = { _router: ExpressRouterDouble; };
 type ExpressRequestDouble = {
     body?: unknown;
-    headers: Record<string, string | string[]>;
+    headers: Record<string, string | string[] | undefined>;
     method: string;
     originalUrl: string;
     params: Record<string, string>;
@@ -334,7 +334,7 @@ describe('createApp', () => {
 
         const requestDouble: ExpressRequestDouble = {
             body: undefined,
-            headers: { 'x-tags': ['one', 'two'] },
+            headers: { 'x-empty': undefined, 'x-tags': ['one', 'two'] },
             method: 'POST',
             originalUrl: '',
             params: {},

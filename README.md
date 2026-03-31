@@ -139,6 +139,29 @@ Available scripts:
 - `npm run format`
 - `npm run format:write`
 
+## Docker
+
+The repository includes a Bun-based multi-stage `Dockerfile`.
+
+- build stage: `Bun`
+- runtime stage: `Bun`
+- default container runtime: Bun-native HTTP adapter
+
+Build example:
+
+```bash
+docker build -t hexagonal-backend-template-ts .
+```
+
+Run example:
+
+```bash
+docker run --rm -p 3000:3000 --env-file .env hexagonal-backend-template-ts
+```
+
+The container exposes the backend on port `3000`.
+Node portability remains available in the repository, but the default image is Bun-first.
+
 ## Example endpoints
 
 ```http
@@ -325,6 +348,29 @@ Scripts disponibles:
 - `npm run lint`
 - `npm run format`
 - `npm run format:write`
+
+## Docker
+
+El repositorio incluye un `Dockerfile` multi-stage basado en Bun.
+
+- stage de build: `Bun`
+- stage de runtime: `Bun`
+- runtime por defecto del contenedor: adapter HTTP nativo de Bun
+
+Ejemplo de build:
+
+```bash
+docker build -t hexagonal-backend-template-ts .
+```
+
+Ejemplo de ejecución:
+
+```bash
+docker run --rm -p 3000:3000 --env-file .env hexagonal-backend-template-ts
+```
+
+El contenedor expone el backend en el puerto `3000`.
+La portabilidad con Node sigue disponible en el repositorio, pero la imagen por defecto pasa a ser Bun-first.
 
 ## Endpoints de ejemplo
 

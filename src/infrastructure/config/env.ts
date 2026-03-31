@@ -1,4 +1,4 @@
-import {z} from 'zod';
+import { z } from 'zod';
 
 export interface Environment {
     NODE_ENV: 'development' | 'test' | 'production';

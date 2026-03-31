@@ -1,13 +1,17 @@
 import { CreateUserUseCase } from '../../../application/users/create-user/CreateUserUseCase';
+import { DeleteUserUseCase } from '../../../application/users/delete-user/DeleteUserUseCase';
 import { GetUserByIdUseCase } from '../../../application/users/get-user-by-id/GetUserByIdUseCase';
 import { ListUsersUseCase } from '../../../application/users/list-users/ListUsersUseCase';
+import { UpdateUserUseCase } from '../../../application/users/update-user/UpdateUserUseCase';
 import { InMemoryUserRepository } from '../../../infrastructure/persistence/users/InMemoryUserRepository';
 import type { SharedModuleDependencies } from '../SharedModuleDependencies';
 
 export interface UsersModule {
     createUser: CreateUserUseCase;
+    deleteUser: DeleteUserUseCase;
     getUserById: GetUserByIdUseCase;
     listUsers: ListUsersUseCase;
+    updateUser: UpdateUserUseCase;
 }
 
 export function createUsersModule(dependencies: SharedModuleDependencies): UsersModule {
@@ -21,7 +25,18 @@ export function createUsersModule(dependencies: SharedModuleDependencies): Users
             transactionManager: dependencies.transactionManager,
             userRepository
         }),
+        deleteUser: new DeleteUserUseCase({
+            logger: dependencies.createLogger({ module: 'users', useCase: 'DeleteUserUseCase' }),
+            transactionManager: dependencies.transactionManager,
+            userRepository
+        }),
         getUserById: new GetUserByIdUseCase({ userRepository }),
-        listUsers: new ListUsersUseCase(userRepository)
+        listUsers: new ListUsersUseCase(userRepository),
+        updateUser: new UpdateUserUseCase({
+            clock: dependencies.clock,
+            logger: dependencies.createLogger({ module: 'users', useCase: 'UpdateUserUseCase' }),
+            transactionManager: dependencies.transactionManager,
+            userRepository
+        })
     };
 }

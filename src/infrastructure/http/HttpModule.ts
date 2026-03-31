@@ -4,7 +4,7 @@ export interface HttpModule {
     routes: HttpRoute[];
 }
 
-export type HttpMethod = 'GET' | 'POST';
+export type HttpMethod = 'DELETE' | 'GET' | 'POST' | 'PUT';
 
 export interface HttpRequest {
     body?: unknown;

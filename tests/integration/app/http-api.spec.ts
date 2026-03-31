@@ -47,7 +47,7 @@ describe('HTTP API', () => {
         });
     });
 
-    it('creates, lists and fetches users', async () => {
+    it('creates, updates, lists, fetches and deletes users', async () => {
         const app: Express = createTestApp();
 
         const createResponse: request.Response = await request(app).post('/api/v1/users').send({
@@ -60,29 +60,63 @@ describe('HTTP API', () => {
         expect(createdUser.email).toBe('alice@example.com');
 
         const userId: string = createdUser.id;
+        const updateResponse: request.Response = await request(app).put(`/api/v1/users/${userId}`).send({
+            email: 'alice.smith@example.com',
+            name: 'Alice Smith'
+        });
+        const updatedUser: UserResponse = updateResponse.body as UserResponse;
+
+        expect(updateResponse.status).toBe(200);
+        expect(updatedUser.email).toBe('alice.smith@example.com');
+        expect(updatedUser.name).toBe('Alice Smith');
 
         const listResponse: request.Response = await request(app).get('/api/v1/users');
         const listedUsers: UsersListResponse = listResponse.body as UsersListResponse;
 
         expect(listResponse.status).toBe(200);
         expect(listedUsers.items).toHaveLength(1);
-        expect(listedUsers.items[0]?.id).toBe(userId);
+        expect(listedUsers.items[0]).toMatchObject({ email: 'alice.smith@example.com', id: userId, name: 'Alice Smith' });
 
         const getResponse: request.Response = await request(app).get(`/api/v1/users/${userId}`);
         const fetchedUser: UserResponse = getResponse.body as UserResponse;
 
         expect(getResponse.status).toBe(200);
         expect(fetchedUser.id).toBe(userId);
+        expect(fetchedUser.updatedAt).toBe(updatedUser.updatedAt);
+
+        const deleteResponse: request.Response = await request(app).delete(`/api/v1/users/${userId}`);
+
+        expect(deleteResponse.status).toBe(204);
+
+        const missingAfterDeleteResponse: request.Response = await request(app).get(`/api/v1/users/${userId}`);
+        const missingAfterDeleteError: ErrorResponse = missingAfterDeleteResponse.body as ErrorResponse;
+
+        expect(missingAfterDeleteResponse.status).toBe(404);
+        expect(missingAfterDeleteError.error.code).toBe('USER_NOT_FOUND');
     });
 
     it('returns validation and not found errors through the HTTP layer', async () => {
         const app: Express = createTestApp();
+        const createdUserResponse: request.Response = await request(app).post('/api/v1/users').send({
+            email: 'alice@example.com',
+            name: 'Alice'
+        });
+        const createdUser: UserResponse = createdUserResponse.body as UserResponse;
 
         const invalidCreateResponse: request.Response = await request(app).post('/api/v1/users').send({ email: 'not-an-email', name: 'A' });
         const invalidCreateError: ErrorResponse = invalidCreateResponse.body as ErrorResponse;
 
         expect(invalidCreateResponse.status).toBe(400);
         expect(invalidCreateError.error.code).toBe('INVALID_REQUEST');
+
+        const invalidUpdateResponse: request.Response = await request(app).put(`/api/v1/users/${createdUser.id}`).send({
+            email: 'not-an-email',
+            name: 'A'
+        });
+        const invalidUpdateError: ErrorResponse = invalidUpdateResponse.body as ErrorResponse;
+
+        expect(invalidUpdateResponse.status).toBe(400);
+        expect(invalidUpdateError.error.code).toBe('INVALID_REQUEST');
 
         const missingUserResponse: request.Response = await request(app).get('/api/v1/users/5f89458a-01cf-49ef-bd14-e238041bcd4b');
         const missingUserError: ErrorResponse = missingUserResponse.body as ErrorResponse;
@@ -95,6 +129,28 @@ describe('HTTP API', () => {
 
         expect(invalidIdResponse.status).toBe(400);
         expect(invalidIdError.error.code).toBe('INVALID_REQUEST');
+
+        const conflictResponse: request.Response = await request(app).post('/api/v1/users').send({
+            email: 'existing@example.com',
+            name: 'Existing'
+        });
+
+        expect(conflictResponse.status).toBe(201);
+
+        const duplicateEmailResponse: request.Response = await request(app).put(`/api/v1/users/${createdUser.id}`).send({
+            email: 'existing@example.com',
+            name: 'Alice'
+        });
+        const duplicateEmailError: ErrorResponse = duplicateEmailResponse.body as ErrorResponse;
+
+        expect(duplicateEmailResponse.status).toBe(409);
+        expect(duplicateEmailError.error.code).toBe('USER_ALREADY_EXISTS');
+
+        const missingDeleteResponse: request.Response = await request(app).delete('/api/v1/users/5f89458a-01cf-49ef-bd14-e238041bcd4b');
+        const missingDeleteError: ErrorResponse = missingDeleteResponse.body as ErrorResponse;
+
+        expect(missingDeleteResponse.status).toBe(404);
+        expect(missingDeleteError.error.code).toBe('USER_NOT_FOUND');
     });
 
     it('exposes the health endpoint', async () => {

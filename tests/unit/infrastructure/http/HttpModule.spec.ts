@@ -25,12 +25,13 @@ describe('HttpModule', () => {
                 handler: () => Promise.resolve({ statusCode: 200 }),
                 method: 'GET',
                 path: '/:id'
-            }]
+            }, { handler: () => Promise.resolve({ statusCode: 204 }), method: 'DELETE', path: '/:id' }]
         }];
 
         expect(matchHttpPath('/api/v1/users/:id', '/api/v1/users/user%201')).toEqual({ id: 'user 1' });
         expect(matchHttpPath('/api/v1/users/:id', '/api/v1/users')).toBeNull();
         expect(resolveHttpRoute(modules, 'GET', '/api/v1/users/123')?.params).toEqual({ id: '123' });
+        expect(resolveHttpRoute(modules, 'DELETE', '/api/v1/users/123')?.route.method).toBe('DELETE');
         expect(resolveHttpRoute(modules, 'POST', '/api/v1/users/123')).toBeNull();
     });
 });

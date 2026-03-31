@@ -236,5 +236,19 @@ describe('httpLogging', () => {
             responseTime: 12,
             statusCode: 201
         });
+        expect(buildHttpSuccessObject(request, response, { statusCode: 201 }, true)).toEqual({
+            http: {
+                request: {
+                    body: { name: 'Alice' },
+                    headers: { 'content-type': 'application/json', 'x-request-id': 'req-7' },
+                    method: 'POST',
+                    query: { active: 'true' },
+                    remoteAddress: '127.0.0.1',
+                    url: '/api/v1/users'
+                },
+                response: { headers: { location: '/api/v1/users/1' }, statusCode: 201 }
+            },
+            statusCode: 201
+        });
     });
 });

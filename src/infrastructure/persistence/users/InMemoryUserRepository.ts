@@ -12,6 +12,11 @@ export class InMemoryUserRepository implements UserRepository {
         return Promise.resolve();
     }
 
+    public delete(id: UserId): Promise<void> {
+        this.users.delete(id.value);
+        return Promise.resolve();
+    }
+
     public findById(id: UserId): Promise<User | null> {
         const user: UserPrimitives | undefined = this.users.get(id.value);
         return Promise.resolve(user ? User.fromPrimitives(user) : null);

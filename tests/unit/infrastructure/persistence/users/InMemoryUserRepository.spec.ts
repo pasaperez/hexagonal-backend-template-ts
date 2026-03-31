@@ -63,5 +63,9 @@ describe('InMemoryUserRepository', () => {
                 updatedAt: '2026-01-02T10:00:00.000Z'
             })
         ]);
+
+        await repository.delete(new UserId('5f89458a-01cf-49ef-bd14-e238041bcd4b'));
+
+        await expect(repository.findById(new UserId('5f89458a-01cf-49ef-bd14-e238041bcd4b'))).resolves.toBeNull();
     });
 });
