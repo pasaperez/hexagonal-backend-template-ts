@@ -116,7 +116,7 @@ npm run dev:node
 ```
 
 `npm run dev:node` and `npm run start:node` run on Node.js and therefore use the Express adapter.
-`package-lock.json`and `bun.lock` are intentionally not tracked.
+`package-lock.json` and `bun.lock` are intentionally not tracked.
 
 Available scripts:
 
@@ -206,14 +206,16 @@ curl --request POST \
 - The structure is intentionally layer-oriented to prioritize architectural readability in small and medium projects
 - `health` does not hang from business modules: it is treated as an operational system concern
 - HTTP adapters are runtime-specific, but the route definitions are shared so Bun and Express expose the same behavior
-- The structure is intended for pure backend work, not fullstack
+- The structure is intentionally backend-only and optimized for clear service boundaries
+- Test-only resets, fixtures, mocks, and similar helpers stay in `tests/**` or test setup, not in `src/**`, unless they are real runtime dependency boundaries
+- Runtime code should clean up listeners, timers, intervals, streams, sockets, and similar resources, and should avoid unbounded process-global caches or stores unless that boundary is intentional
 
 </details>
 
 <details>
 <summary>Español</summary>
 
-Témplate de backend puro con arquitectura hexagonal en TypeScript, pensado para correr de forma portable sobre Node.js pero con preferencia práctica por Bun en desarrollo local y ejecución diaria.
+Template de backend puro con arquitectura hexagonal en TypeScript, pensado para correr de forma portable sobre Node.js pero con preferencia práctica por Bun en desarrollo local y ejecución diaria.
 
 La compatibilidad con Node se mantiene para que el template sea más universal, pero si no hay una restricción concreta, la opción recomendada es usar `bun`, tanto por ergonomía como por performance general del runtime. Cuando el proceso corre sobre Bun, el template usa un adapter HTTP nativo de Bun. Cuando corre sobre Node.js, hace fallback a Express.
 
@@ -326,7 +328,7 @@ npm run dev:node
 ```
 
 `npm run dev:node` y `npm run start:node` corren sobre Node.js y por eso usan el adapter de Express.
-`package-lock.json` y `bun.lock` estan intencionalmente fuera de control de versiones.
+`package-lock.json` y `bun.lock` están intencionalmente fuera de control de versiones.
 
 Scripts disponibles:
 
@@ -416,6 +418,8 @@ curl --request POST \
 - La estructura está deliberadamente orientada a capas para priorizar lectura arquitectónica en proyectos chicos y medianos
 - `health` no cuelga de negocio: está tratado como concern operativo del sistema
 - Los adapters HTTP dependen del runtime, pero las definiciones de rutas son compartidas para que Bun y Express expongan el mismo comportamiento
-- La estructura está pensada para backend puro, no fullstack
+- La estructura está deliberadamente enfocada en backend y en límites de servicio claros
+- Los resets, fixtures, mocks y helpers equivalentes exclusivos de testing van en `tests/**` o en el setup de pruebas, no en `src/**`, salvo que sean límites reales de dependencias de runtime
+- El código de runtime debe limpiar listeners, timers, intervalos, streams, sockets y recursos similares, y debe evitar caches o stores globales sin cota salvo que ese límite sea intencional
 
 </details>

@@ -92,6 +92,8 @@ If you add environment variables:
 - Formatting is handled by `dprint`, not Prettier.
 - Prefer repository-level `dprint.json` changes over scattered formatter-ignore comments.
 - If formatting must be bypassed for a real edge case, use a narrow `dprint-ignore` only on that specific code.
+- Keep test-only resets, fixtures, mocks, and similar helpers out of `src/**`. Put that support in `tests/**` or test setup unless it is a real runtime dependency boundary.
+- Avoid memory leaks and process leaks. Clean up listeners, timers, intervals, streams, sockets, workers, and similar resources, and do not introduce unbounded process-global stores or caches unless they are deliberate runtime boundaries.
 
 ## Logging
 
