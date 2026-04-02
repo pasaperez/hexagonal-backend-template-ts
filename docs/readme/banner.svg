@@ -1,0 +1,88 @@
+<svg width="1280" height="620" viewBox="0 0 1280 620" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title desc" style="overflow:hidden">
+  <title id="title">Hexagonal backend template banner</title>
+  <desc id="desc">Banner for the hexagonal backend TypeScript template with Bun and Node runtimes plus layered architecture.</desc>
+  <defs>
+    <linearGradient id="bg" x1="68" y1="30" x2="1214" y2="590" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#F7F4FF"/>
+      <stop offset="0.56" stop-color="#EEF8FF"/>
+      <stop offset="1" stop-color="#F7FCEE"/>
+    </linearGradient>
+    <filter id="shadow" x="654" y="64" width="564" height="500" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="30" stdDeviation="24" flood-color="#1E245014"/>
+    </filter>
+    <clipPath id="leftClip">
+      <rect x="64" y="72" width="566" height="500" rx="0"/>
+    </clipPath>
+    <clipPath id="panelClip">
+      <rect x="688" y="98" width="500" height="436" rx="32"/>
+    </clipPath>
+  </defs>
+
+  <rect width="1280" height="620" rx="32" fill="url(#bg)"/>
+  <circle cx="120" cy="122" r="82" fill="#E9E0FF"/>
+  <circle cx="1146" cy="120" r="92" fill="#DCEBFF"/>
+  <circle cx="1212" cy="210" r="52" fill="#E4F6D9"/>
+
+  <g clip-path="url(#leftClip)">
+    <rect x="92" y="96" width="206" height="38" rx="19" fill="#ECE7FF"/>
+    <text x="195" y="121" fill="#5B2AC8" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" text-anchor="middle">Hexagonal backend</text>
+
+    <text x="92" y="190" fill="#111827" font-family="Arial, Helvetica, sans-serif" font-size="60" font-weight="700">Backend Template</text>
+    <text x="92" y="244" fill="#2E63E7" font-family="Arial, Helvetica, sans-serif" font-size="24" font-weight="700">TypeScript • Bun-native • Node-portable</text>
+
+    <text x="92" y="298" fill="#46566E" font-family="Arial, Helvetica, sans-serif" font-size="18">Explicit ports, runtime-selected HTTP adapters, typed config,</text>
+    <text x="92" y="328" fill="#46566E" font-family="Arial, Helvetica, sans-serif" font-size="18">and service boundaries that stay clean as the backend grows.</text>
+
+    <rect x="92" y="398" width="248" height="48" rx="24" fill="#0F172A"/>
+    <text x="216" y="429" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" text-anchor="middle">Bun + Node runtime</text>
+    <rect x="354" y="398" width="176" height="48" rx="24" fill="#FFFFFF" stroke="#D6DCF2" stroke-width="2"/>
+    <text x="442" y="429" fill="#132238" font-family="Arial, Helvetica, sans-serif" font-size="17" font-weight="700" text-anchor="middle">users module</text>
+
+    <rect x="92" y="474" width="128" height="94" rx="20" fill="#FFFFFF" stroke="#D6DCF2"/>
+    <rect x="234" y="474" width="128" height="94" rx="20" fill="#FFFFFF" stroke="#D6DCF2"/>
+    <rect x="376" y="474" width="128" height="94" rx="20" fill="#FFFFFF" stroke="#D6DCF2"/>
+
+    <text x="116" y="504" fill="#6B7280" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700">Config</text>
+    <text x="156" y="532" fill="#111827" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" text-anchor="middle">Zod</text>
+    <text x="156" y="552" fill="#111827" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" text-anchor="middle">Typed env</text>
+
+    <text x="258" y="504" fill="#6B7280" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700">HTTP</text>
+    <text x="298" y="532" fill="#111827" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" text-anchor="middle">Bun</text>
+    <text x="298" y="552" fill="#111827" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" text-anchor="middle">Express</text>
+
+    <text x="400" y="504" fill="#6B7280" font-family="Arial, Helvetica, sans-serif" font-size="12" font-weight="700">Quality</text>
+    <text x="440" y="532" fill="#111827" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" text-anchor="middle">Vitest</text>
+    <text x="440" y="552" fill="#111827" font-family="Arial, Helvetica, sans-serif" font-size="16" font-weight="700" text-anchor="middle">Pino</text>
+  </g>
+
+  <g filter="url(#shadow)">
+    <rect x="688" y="98" width="500" height="436" rx="32" fill="#FFFFFF"/>
+    <g clip-path="url(#panelClip)">
+      <rect x="730" y="98" width="132" height="30" rx="15" fill="#111827"/>
+      <text x="796" y="118" fill="#FFFFFF" font-family="Arial, Helvetica, sans-serif" font-size="14" font-weight="700" text-anchor="middle">Service flow</text>
+
+      <rect x="734" y="146" width="392" height="100" rx="24" fill="#EEF3FF"/>
+      <text x="930" y="182" fill="#23408F" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" text-anchor="middle">Infrastructure</text>
+      <text x="930" y="212" fill="#5A6577" font-family="Arial, Helvetica, sans-serif" font-size="15" text-anchor="middle">HTTP adapters, persistence, logging,</text>
+      <text x="930" y="234" fill="#5A6577" font-family="Arial, Helvetica, sans-serif" font-size="15" text-anchor="middle">runtime wiring</text>
+
+      <path d="M930 248V278" stroke="#97A6BC" stroke-width="4" stroke-linecap="round"/>
+
+      <rect x="778" y="282" width="286" height="82" rx="24" fill="#F7F0FF"/>
+      <text x="921" y="316" fill="#6A32D8" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" text-anchor="middle">Application</text>
+      <text x="921" y="340" fill="#5A6577" font-family="Arial, Helvetica, sans-serif" font-size="15" text-anchor="middle">Use cases depend on ports only</text>
+
+      <rect x="1072" y="282" width="72" height="82" rx="22" fill="#FFF5E8"/>
+      <text x="1108" y="328" fill="#C25A09" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" text-anchor="middle">Bun</text>
+
+      <path d="M930 366V394" stroke="#97A6BC" stroke-width="4" stroke-linecap="round"/>
+
+      <rect x="840" y="396" width="170" height="82" rx="24" fill="#EDF9F0"/>
+      <text x="925" y="430" fill="#17623E" font-family="Arial, Helvetica, sans-serif" font-size="22" font-weight="700" text-anchor="middle">Domain</text>
+      <text x="925" y="454" fill="#5A6577" font-family="Arial, Helvetica, sans-serif" font-size="15" text-anchor="middle">Pure business rules</text>
+
+      <rect x="1058" y="396" width="86" height="82" rx="22" fill="#EDF6FF"/>
+      <text x="1101" y="442" fill="#2552D6" font-family="Arial, Helvetica, sans-serif" font-size="18" font-weight="700" text-anchor="middle">Node</text>
+    </g>
+  </g>
+</svg>
