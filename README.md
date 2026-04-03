@@ -67,8 +67,7 @@ sequenceDiagram
 <details open>
 <summary><strong>English</strong></summary>
 
-> [!NOTE]
-> Node compatibility is intentionally preserved so the template stays broadly reusable, but unless there is a concrete restriction, `bun` is the recommended runtime for both ergonomics and overall runtime performance.
+> **Note:** Node compatibility is intentionally preserved so the template stays broadly reusable, but unless there is a concrete restriction, `bun` is the recommended runtime for both ergonomics and overall runtime performance.
 
 Pure backend template with hexagonal architecture in TypeScript, designed to stay portable on Node.js while preferring Bun for local development and day-to-day execution.
 
@@ -283,8 +282,7 @@ curl --request POST \
 <details>
 <summary><strong>Español</strong></summary>
 
-> [!NOTE]
-> La compatibilidad con Node se mantiene para que el template sea más universal, pero si no hay una restricción concreta, la opción recomendada es usar `bun` por ergonomía y performance general del runtime.
+> **Nota:** La compatibilidad con Node se mantiene para que el template sea más universal, pero si no hay una restricción concreta, la opción recomendada es usar `bun` por ergonomía y performance general del runtime.
 
 Template de backend puro con arquitectura hexagonal en TypeScript, pensado para correr de forma portable sobre Node.js pero con preferencia práctica por Bun en desarrollo local y ejecución diaria.
 
