@@ -16,4 +16,4 @@ COPY package.json ./
 RUN bun install --production
 COPY --from=build /app/dist ./dist
 EXPOSE 3000
-CMD ["bun", "dist/main.js"]
+CMD ["bun", "dist/src/main.js"]

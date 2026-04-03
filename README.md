@@ -29,8 +29,8 @@
   <a href="#espanol">Español</a>
 </p>
 
-| Focus | Runtime model | Example module | Quality gates |
-| --- | --- | --- | --- |
+| Focus                               | Runtime model                                                    | Example module                             | Quality gates                     |
+|-------------------------------------|------------------------------------------------------------------|--------------------------------------------|-----------------------------------|
 | Portable backend service foundation | Bun-native HTTP when running on Bun, Express fallback on Node.js | `users` plus operational `health` endpoint | ESLint, Vitest, Supertest, dprint |
 
 ## Architecture At A Glance
@@ -76,12 +76,12 @@ Node compatibility is intentionally preserved so the template stays broadly reus
 
 ### Quick Facts
 
-| Area | Details |
-| --- | --- |
-| Repository goal | Provide a backend baseline with clear boundaries and no framework leakage into the domain |
-| Architectural boundary | `domain` <- `application` <- `infrastructure` with bootstrap in `app` |
-| Runtime split | Bun-native HTTP adapter on Bun, Express adapter on Node.js |
-| Example surface | `users` module plus operational `health` endpoint |
+| Area                   | Details                                                                                   |
+|------------------------|-------------------------------------------------------------------------------------------|
+| Repository goal        | Provide a backend baseline with clear boundaries and no framework leakage into the domain |
+| Architectural boundary | `domain` <- `application` <- `infrastructure` with bootstrap in `app`                     |
+| Runtime split          | Bun-native HTTP adapter on Bun, Express adapter on Node.js                                |
+| Example surface        | `users` module plus operational `health` endpoint                                         |
 
 ### What Is Included
 
@@ -99,9 +99,9 @@ Node compatibility is intentionally preserved so the template stays broadly reus
 
 ### Stack
 
-| Runtime | HTTP | Validation and logging | Quality |
-| --- | --- | --- | --- |
-| `Bun`, `Node.js 20+`, `TypeScript` | `Bun HTTP`, `Express` | `Zod`, `Pino` | `Vitest`, `Supertest`, `ESLint`, `dprint` |
+| Runtime                            | HTTP                  | Validation and logging | Quality                                   |
+|------------------------------------|-----------------------|------------------------|-------------------------------------------|
+| `Bun`, `Node.js 20+`, `TypeScript` | `Bun HTTP`, `Express` | `Zod`, `Pino`          | `Vitest`, `Supertest`, `ESLint`, `dprint` |
 
 ### Structure
 
@@ -191,27 +191,27 @@ npm run dev:node
 
 Available scripts:
 
-| Purpose | Bun / Node command |
-| --- | --- |
-| Bun dev | `bun run dev` |
-| Node dev | `bun run dev:node` or `npm run dev:node` |
-| Build | `bun run build` or `npm run build` |
-| Bun start | `bun run start` |
-| Node start | `bun run start:node` or `npm run start:node` |
-| Tests | `bun run test` or `npm run test` |
-| Coverage | `bun run test:coverage` or `npm run test:coverage` |
-| Lint | `bun run lint` or `npm run lint` |
-| Format check | `bun run format` or `npm run format` |
-| Format write | `bun run format:write` or `npm run format:write` |
+| Purpose      | Bun / Node command                                 |
+|--------------|----------------------------------------------------|
+| Bun dev      | `bun run dev`                                      |
+| Node dev     | `bun run dev:node` or `npm run dev:node`           |
+| Build        | `bun run build` or `npm run build`                 |
+| Bun start    | `bun run start`                                    |
+| Node start   | `bun run start:node` or `npm run start:node`       |
+| Tests        | `bun run test` or `npm run test`                   |
+| Coverage     | `bun run test:coverage` or `npm run test:coverage` |
+| Lint         | `bun run lint` or `npm run lint`                   |
+| Format check | `bun run format` or `npm run format`               |
+| Format write | `bun run format:write` or `npm run format:write`   |
 
 ### Docker
 
 The repository includes a Bun-based multi-stage `Dockerfile`.
 
-| Stage | Runtime |
-| --- | --- |
-| Build | `Bun` |
-| Runtime | `Bun` |
+| Stage                      | Runtime                 |
+|----------------------------|-------------------------|
+| Build                      | `Bun`                   |
+| Runtime                    | `Bun`                   |
 | Default container behavior | Bun-native HTTP adapter |
 
 Build example:
@@ -292,12 +292,12 @@ La compatibilidad con Node se mantiene para que el template sea más universal, 
 
 ### Resumen Rápido
 
-| Área | Detalle |
-| --- | --- |
+| Área                     | Detalle                                                                                    |
+|--------------------------|--------------------------------------------------------------------------------------------|
 | Objetivo del repositorio | Dar una base de backend con límites claros y sin filtración de frameworks hacia el dominio |
-| Límite arquitectónico | `domain` <- `application` <- `infrastructure` con bootstrap en `app` |
-| Split de runtime | Adapter HTTP nativo en Bun y adapter Express en Node.js |
-| Superficie de ejemplo | módulo `users` más endpoint operativo `health` |
+| Límite arquitectónico    | `domain` <- `application` <- `infrastructure` con bootstrap en `app`                       |
+| Split de runtime         | Adapter HTTP nativo en Bun y adapter Express en Node.js                                    |
+| Superficie de ejemplo    | módulo `users` más endpoint operativo `health`                                             |
 
 ### Qué Incluye
 
@@ -315,9 +315,9 @@ La compatibilidad con Node se mantiene para que el template sea más universal, 
 
 ### Stack
 
-| Runtime | HTTP | Validación y logging | Calidad |
-| --- | --- | --- | --- |
-| `Bun`, `Node.js 20+`, `TypeScript` | `Bun HTTP`, `Express` | `Zod`, `Pino` | `Vitest`, `Supertest`, `ESLint`, `dprint` |
+| Runtime                            | HTTP                  | Validación y logging | Calidad                                   |
+|------------------------------------|-----------------------|----------------------|-------------------------------------------|
+| `Bun`, `Node.js 20+`, `TypeScript` | `Bun HTTP`, `Express` | `Zod`, `Pino`        | `Vitest`, `Supertest`, `ESLint`, `dprint` |
 
 ### Estructura
 
@@ -407,27 +407,27 @@ npm run dev:node
 
 Scripts disponibles:
 
-| Propósito | Comando Bun / Node |
-| --- | --- |
-| Dev con Bun | `bun run dev` |
-| Dev con Node | `bun run dev:node` o `npm run dev:node` |
-| Build | `bun run build` o `npm run build` |
-| Start con Bun | `bun run start` |
-| Start con Node | `bun run start:node` o `npm run start:node` |
-| Tests | `bun run test` o `npm run test` |
-| Cobertura | `bun run test:coverage` o `npm run test:coverage` |
-| Lint | `bun run lint` o `npm run lint` |
-| Check de formato | `bun run format` o `npm run format` |
-| Escritura de formato | `bun run format:write` o `npm run format:write` |
+| Propósito            | Comando Bun / Node                                |
+|----------------------|---------------------------------------------------|
+| Dev con Bun          | `bun run dev`                                     |
+| Dev con Node         | `bun run dev:node` o `npm run dev:node`           |
+| Build                | `bun run build` o `npm run build`                 |
+| Start con Bun        | `bun run start`                                   |
+| Start con Node       | `bun run start:node` o `npm run start:node`       |
+| Tests                | `bun run test` o `npm run test`                   |
+| Cobertura            | `bun run test:coverage` o `npm run test:coverage` |
+| Lint                 | `bun run lint` o `npm run lint`                   |
+| Check de formato     | `bun run format` o `npm run format`               |
+| Escritura de formato | `bun run format:write` o `npm run format:write`   |
 
 ### Docker
 
 El repositorio incluye un `Dockerfile` multi-stage basado en Bun.
 
-| Stage | Runtime |
-| --- | --- |
-| Build | `Bun` |
-| Runtime | `Bun` |
+| Stage                                     | Runtime                    |
+|-------------------------------------------|----------------------------|
+| Build                                     | `Bun`                      |
+| Runtime                                   | `Bun`                      |
 | Comportamiento por defecto del contenedor | adapter HTTP nativo de Bun |
 
 Ejemplo de build:
