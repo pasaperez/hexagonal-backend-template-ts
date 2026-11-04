@@ -1,7 +1,7 @@
 const tsPlugin = require('@typescript-eslint/eslint-plugin');
 const tsParser = require('@typescript-eslint/parser');
 
-module.exports = [{ ignores: ['dist', 'coverage', 'eslint.config.cjs'] }, ...tsPlugin.configs['flat/recommended-type-checked'], {
+module.exports = [{ ignores: ['dist', 'coverage', 'eslint.config.cjs', 'scripts'] }, ...tsPlugin.configs['flat/recommended-type-checked'], {
     files: ['**/*.ts'],
     languageOptions: {
         parser: tsParser,

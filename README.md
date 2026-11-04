@@ -30,7 +30,7 @@
 </p>
 
 | Focus                               | Runtime model                                                    | Example module                             | Quality gates                     |
-|-------------------------------------|------------------------------------------------------------------|--------------------------------------------|-----------------------------------|
+| ----------------------------------- | ---------------------------------------------------------------- | ------------------------------------------ | --------------------------------- |
 | Portable backend service foundation | Bun-native HTTP when running on Bun, Express fallback on Node.js | `users` plus operational `health` endpoint | ESLint, Vitest, Supertest, dprint |
 
 ## Architecture At A Glance
@@ -64,6 +64,7 @@ sequenceDiagram
 ```
 
 <a id="english"></a>
+
 <details open>
 <summary><strong>English</strong></summary>
 
@@ -76,7 +77,7 @@ Node compatibility is intentionally preserved so the template stays broadly reus
 ### Quick Facts
 
 | Area                   | Details                                                                                   |
-|------------------------|-------------------------------------------------------------------------------------------|
+| ---------------------- | ----------------------------------------------------------------------------------------- |
 | Repository goal        | Provide a backend baseline with clear boundaries and no framework leakage into the domain |
 | Architectural boundary | `domain` <- `application` <- `infrastructure` with bootstrap in `app`                     |
 | Runtime split          | Bun-native HTTP adapter on Bun, Express adapter on Node.js                                |
@@ -95,11 +96,12 @@ Node compatibility is intentionally preserved so the template stays broadly reus
 - Unit and integration tests with `vitest` and `supertest`
 - GitHub Actions CI validating both Node.js and Bun
 - `Dockerfile`, GitHub Actions CI, ESLint, and dprint
+- `scripts/dead-code.mjs` (part of `bun run lint`) fails the build on unused exports, orphan files and unused CSS classes: this template keeps no dead code
 
 ### Stack
 
 | Runtime                            | HTTP                  | Validation and logging | Quality                                   |
-|------------------------------------|-----------------------|------------------------|-------------------------------------------|
+| ---------------------------------- | --------------------- | ---------------------- | ----------------------------------------- |
 | `Bun`, `Node.js 20+`, `TypeScript` | `Bun HTTP`, `Express` | `Zod`, `Pino`          | `Vitest`, `Supertest`, `ESLint`, `dprint` |
 
 ### Structure
@@ -191,7 +193,7 @@ npm run dev:node
 Available scripts:
 
 | Purpose      | Bun / Node command                                 |
-|--------------|----------------------------------------------------|
+| ------------ | -------------------------------------------------- |
 | Bun dev      | `bun run dev`                                      |
 | Node dev     | `bun run dev:node` or `npm run dev:node`           |
 | Build        | `bun run build` or `npm run build`                 |
@@ -208,7 +210,7 @@ Available scripts:
 The repository includes a Bun-based multi-stage `Dockerfile`.
 
 | Stage                      | Runtime                 |
-|----------------------------|-------------------------|
+| -------------------------- | ----------------------- |
 | Build                      | `Bun`                   |
 | Runtime                    | `Bun`                   |
 | Default container behavior | Bun-native HTTP adapter |
@@ -279,6 +281,7 @@ curl --request POST \
 </details>
 
 <a id="espanol"></a>
+
 <details>
 <summary><strong>Español</strong></summary>
 
@@ -291,7 +294,7 @@ La compatibilidad con Node se mantiene para que el template sea más universal, 
 ### Resumen Rápido
 
 | Área                     | Detalle                                                                                    |
-|--------------------------|--------------------------------------------------------------------------------------------|
+| ------------------------ | ------------------------------------------------------------------------------------------ |
 | Objetivo del repositorio | Dar una base de backend con límites claros y sin filtración de frameworks hacia el dominio |
 | Límite arquitectónico    | `domain` <- `application` <- `infrastructure` con bootstrap en `app`                       |
 | Split de runtime         | Adapter HTTP nativo en Bun y adapter Express en Node.js                                    |
@@ -310,11 +313,12 @@ La compatibilidad con Node se mantiene para que el template sea más universal, 
 - Tests unitarios e integración con `vitest` y `supertest`
 - GitHub Actions CI validando tanto Node.js como Bun
 - `Dockerfile`, CI de GitHub Actions, ESLint y dprint
+- `scripts/dead-code.mjs` (parte de `bun run lint`) falla ante exports sin uso, archivos huérfanos y clases CSS sin uso: esta plantilla no deja código muerto
 
 ### Stack
 
 | Runtime                            | HTTP                  | Validación y logging | Calidad                                   |
-|------------------------------------|-----------------------|----------------------|-------------------------------------------|
+| ---------------------------------- | --------------------- | -------------------- | ----------------------------------------- |
 | `Bun`, `Node.js 20+`, `TypeScript` | `Bun HTTP`, `Express` | `Zod`, `Pino`        | `Vitest`, `Supertest`, `ESLint`, `dprint` |
 
 ### Estructura
@@ -406,7 +410,7 @@ npm run dev:node
 Scripts disponibles:
 
 | Propósito            | Comando Bun / Node                                |
-|----------------------|---------------------------------------------------|
+| -------------------- | ------------------------------------------------- |
 | Dev con Bun          | `bun run dev`                                     |
 | Dev con Node         | `bun run dev:node` o `npm run dev:node`           |
 | Build                | `bun run build` o `npm run build`                 |
@@ -423,7 +427,7 @@ Scripts disponibles:
 El repositorio incluye un `Dockerfile` multi-stage basado en Bun.
 
 | Stage                                     | Runtime                    |
-|-------------------------------------------|----------------------------|
+| ----------------------------------------- | -------------------------- |
 | Build                                     | `Bun`                      |
 | Runtime                                   | `Bun`                      |
 | Comportamiento por defecto del contenedor | adapter HTTP nativo de Bun |

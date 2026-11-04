@@ -13,7 +13,7 @@ export interface AppContainer<TModules> {
     modules: TModules;
 }
 
-export interface CreateContainerOptions<TModules> {
+interface CreateContainerOptions<TModules> {
     createModules: (dependencies: SharedModuleDependencies) => TModules;
     env?: Environment;
 }

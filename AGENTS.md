@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Short operational guide for AI agents working in this repository.
+Entry point for AI agents working in this repository. It is deliberately short: load only the document that matches the work you are about to do (table below) instead of reading everything.
 
 ## Purpose
 
@@ -9,112 +9,34 @@ Node compatibility is intentionally preserved, but Bun is the preferred runtime 
 
 ## Stack and commands
 
-- Bun
-- Node.js 20+
-- Strict TypeScript
-- Express
-- Zod
-- Pino / Pino HTTP
-- Vitest
+Bun · Node.js 20+ · TypeScript (strict) · Express · Zod · Pino / Pino HTTP · Vitest · ESLint · dprint.
 
-Preferred commands:
+- `bun install` · `bun run dev` · `bun run start` · `bun run build`
+- `bun run lint` (ESLint + `scripts/dead-code.mjs`) · `bun run test` · `bun run test:coverage`
+- `bun run format` · `bun run format:write`
+- Node fallback: `npm run dev:node`, `npm run start:node`, and the same `build`, `lint`, `test`, `format` scripts through `npm run`.
 
-- `bun install`
-- `bun run dev`
-- `bun run start`
-- `bun run build`
-- `bun run lint`
-- `bun run test`
-- `bun run test:coverage`
-- `bun run format`
-- `bun run format:write`
+After code changes run `bun run build` and `bun run lint`; when behaviour changes also `bun run test` (coverage is enforced at 100%).
 
-Container packaging preference:
+## Rules that always apply
 
-- Prefer Bun-based Docker images for this repository unless a concrete compatibility requirement forces a Node image.
-- Keep Node.js support in the codebase and scripts, but do not switch the default container runtime back to Node without an explicit reason.
+- **No dead code.** Delete what stops being used in the same change: functions, exports, files, ports, env vars, dependencies, docs. No commented-out code, no TODOs, nothing kept "just in case" or only for tests. `bun run lint` fails on it. Details: [docs/conventions.md](docs/conventions.md#no-dead-code).
+- Keep `domain` / `application` / `infrastructure` / `app`: `domain` never depends on frameworks, Express, env or adapters; `application` depends on ports only; `app` is wiring only. HTTP features are runtime-agnostic `HttpModule` definitions so Bun and Express behave the same.
+- Use the `Logger` port; never `console.log` in application or infrastructure code.
+- Formatting is `dprint` (same config across this template family and the rest of the projects): single quotes, no trailing commas, 140 columns, one import per line, LF line endings. Never Prettier.
+- Test-only helpers, resets and fixtures stay out of `src/**`.
+- Keep Node.js portability; CI validates both Node.js and Bun.
 
-Fallback commands:
+## Load context on demand
 
-- `npm run dev:node`
-- `npm run start:node`
-- `npm run build`
-- `npm run lint`
-- `npm run test`
-- `npm run test:coverage`
-- `npm run format`
-- `npm run format:write`
-
-## Architecture rules
-
-- Keep the `domain` / `application` / `infrastructure` / `app` structure.
-- Preserve Node portability unless the project explicitly decides to adopt Bun-only features.
-- Prefer Bun for local development, script execution, and fast validation when there is no reason to use Node/npm.
-- Prefer Bun for Docker build and runtime stages too, unless a specific deployment environment requires Node-based images.
-- Keep HTTP features expressed through runtime-agnostic `HttpModule` definitions so Bun and Express stay behaviorally aligned.
-- `domain` must not depend on frameworks, Express, environment variables, or concrete adapters.
-- `application` orchestrates use cases and depends on ports, not on infrastructure implementations.
-- `infrastructure` contains concrete adapters.
-- `app` is composition and wiring only. Keep `createApp.ts` and `createBunServer.ts` thin. Do not move business logic there.
-
-Important composition points:
-
-- Shared dependencies: `src/app/modules/SharedModuleDependencies.ts`
-- Main wiring: `src/app/createContainer.ts`
-- Application module registration: `src/app/composition/createApplicationModules.ts`
-- Runtime selector: `src/app/startHttpServer.ts`
-- Bun adapter: `src/app/createBunServer.ts`
-- Express adapter: `src/app/createApp.ts`
-- HTTP module registration: `src/infrastructure/http/modules/index.ts`
-
-## Adding a feature
-
-1. Add model and rules in `src/domain/<feature>`.
-2. Add use cases and ports in `src/application/<feature>`.
-3. Implement adapters in `src/infrastructure/...`.
-4. Register the module in `src/app/modules/...` and `src/app/composition/createApplicationModules.ts`.
-5. If it exposes HTTP, add or update an `HttpModule` and register it in `src/infrastructure/http/modules/index.ts`.
-
-If you add environment variables:
-
-- update `src/infrastructure/config/env.ts`
-- update `.env.example`
-
-## Code conventions
-
-- In `src/**`, keep explicit types and respect the strict typing already configured.
-- Prefer compact, readable code over decorative whitespace.
-- One import per line. Avoid multiline imports unless they are truly necessary.
-- Use 120 characters as the normal width. Short signatures, imports, conditions, and small objects can stay on one line.
-- Avoid empty lines inside very short methods or functions when they do not add clarity.
-- Do not leave an extra blank line after the final block in a file. A normal final newline is fine.
-- Add comments only when they provide real context.
-- Formatting is handled by `dprint`, not Prettier.
-- Prefer repository-level `dprint.json` changes over scattered formatter-ignore comments.
-- If formatting must be bypassed for a real edge case, use a narrow `dprint-ignore` only on that specific code.
-- Keep test-only resets, fixtures, mocks, and similar helpers out of `src/**`. Put that support in `tests/**` or test setup unless it is a real runtime dependency boundary.
-- Avoid memory leaks and process leaks. Clean up listeners, timers, intervals, streams, sockets, workers, and similar resources, and do not introduce unbounded process-global stores or caches unless they are deliberate runtime boundaries.
-
-## Logging
-
-- Use the `Logger` abstraction from `src/application/shared/ports/Logger.ts`.
-- Do not introduce `console.log` in application or infrastructure code.
-- For logging context, prefer child loggers with bindings such as `module`, `useCase`, and `component`.
-- Console output is intentionally compact and Spring-like.
-- HTTP logs stay compact at `info` and include request/response headers and bodies at `debug` / `trace`.
-
-## Tests and validation
-
-- Unit tests live in `tests/unit`.
-- Integration tests live in `tests/integration`.
-- CI validates both Node.js and Bun. Keep both paths green when changing dependencies or runtime-sensitive code.
-- After code changes, run at least `bun run build` and `bun run lint` when Bun is available.
-- If behavior changes, add or update tests and run `bun run test`.
-- If coverage is affected, keep `bun run test:coverage` green.
+| If you are touching…                                                         | Read                                         |
+| ---------------------------------------------------------------------------- | -------------------------------------------- |
+| Layers, composition points, HTTP modules, adding a feature, env vars, Docker | [docs/architecture.md](docs/architecture.md) |
+| Code conventions, logging, tests, the dead-code rule                         | [docs/conventions.md](docs/conventions.md)   |
+| What the template is for and how a human uses it                             | [README.md](README.md)                       |
 
 ## Documentation upkeep
 
-- `README.md` is for human developers.
-- `AGENTS.md` is for AI operational context.
-- Whenever a relevant behavior, runtime preference, architecture rule, script, environment variable, endpoint, logging behavior, adapter, or coding convention changes, update the affected documentation in the same change.
-- Keep this file short, repository-specific, and practical.
+- `README.md` is for human developers; `AGENTS.md` is the short agent entry point; `docs/*.md` hold the detail loaded on demand.
+- When behaviour, runtime preference, architecture rules, scripts, environment variables, endpoints, logging, adapters or conventions change, update this file, `README.md` and the matching `docs/` file in the same change.
+- Keep this file short: detail belongs in `docs/`, and a document nobody links from here is deleted.

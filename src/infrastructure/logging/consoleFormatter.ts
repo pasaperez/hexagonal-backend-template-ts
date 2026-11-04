@@ -1,11 +1,11 @@
 import type { DestinationStream } from 'pino';
 
-export interface ConsoleFormatterOptions {
+interface ConsoleFormatterOptions {
     appName: string;
     colorize?: boolean;
 }
 
-export interface LogRecord extends Record<string, unknown> {
+interface LogRecord extends Record<string, unknown> {
     app?: string;
     component?: string;
     err?: Record<string, unknown>;

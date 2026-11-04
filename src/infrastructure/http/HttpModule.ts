@@ -28,14 +28,14 @@ export interface HttpRoute {
     handler: (request: HttpRequest) => Promise<HttpResponse>;
 }
 
-export interface ResolvedHttpRoute {
+interface ResolvedHttpRoute {
     fullPath: string;
     module: HttpModule;
     params: Record<string, string>;
     route: HttpRoute;
 }
 
-export type EndpointCatalog = Record<string, string>;
+type EndpointCatalog = Record<string, string>;
 
 export function buildEndpointCatalog(httpModules: HttpModule[]): EndpointCatalog {
     return Object.fromEntries(httpModules.map((httpModule: HttpModule): [string, string] => [httpModule.key, httpModule.basePath]));

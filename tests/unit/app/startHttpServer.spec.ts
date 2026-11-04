@@ -1,7 +1,7 @@
 import type { Express } from 'express';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import type * as StartHttpServerModuleType from '../../../src/app/startHttpServer';
 import type { AppContainer } from '../../../src/app/createContainer';
+import type * as StartHttpServerModuleType from '../../../src/app/startHttpServer';
 import type { Environment } from '../../../src/infrastructure/config/env';
 import type { HttpModule } from '../../../src/infrastructure/http/HttpModule';
 import { PinoLogger } from '../../../src/infrastructure/logging/PinoLogger';
