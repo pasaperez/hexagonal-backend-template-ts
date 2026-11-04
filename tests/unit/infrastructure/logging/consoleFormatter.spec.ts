@@ -73,7 +73,7 @@ describe('consoleFormatter', () => {
         const debugLine: string = formatLogRecord({
             level: 'DEBUG',
             msg: 'debug message',
-            req: { id: { nested: true } as unknown },
+            req: { id: { nested: true } },
             time: '26/03/2026 - 20:15:30 (123)',
             useCase: 'HealthProbe'
         }, { appName: 'hexagonal-backend-template-ts', colorize: true });

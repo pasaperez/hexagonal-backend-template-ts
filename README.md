@@ -10,7 +10,7 @@
 
 <p align="center">
   <img src="https://img.shields.io/badge/Bun-native-111111?logo=bun&logoColor=F9F1E1" alt="Bun-native" />
-  <img src="https://img.shields.io/badge/Node-20%2B-339933?logo=node.js&logoColor=white" alt="Node 20+" />
+  <img src="https://img.shields.io/badge/Node-24%2B-339933?logo=node.js&logoColor=white" alt="Node 24+" />
   <img src="https://img.shields.io/badge/Express-fallback-000000?logo=express&logoColor=white" alt="Express fallback" />
   <img src="https://img.shields.io/badge/Architecture-Hexagonal-6D28D9" alt="Hexagonal architecture" />
   <img src="https://img.shields.io/badge/Testing-Vitest%20%2B%20Supertest-2563EB" alt="Vitest and Supertest" />
@@ -102,7 +102,7 @@ Node compatibility is intentionally preserved so the template stays broadly reus
 
 | Runtime                            | HTTP                  | Validation and logging | Quality                                   |
 | ---------------------------------- | --------------------- | ---------------------- | ----------------------------------------- |
-| `Bun`, `Node.js 20+`, `TypeScript` | `Bun HTTP`, `Express` | `Zod`, `Pino`          | `Vitest`, `Supertest`, `ESLint`, `dprint` |
+| `Bun`, `Node.js 24+`, `TypeScript` | `Bun HTTP`, `Express` | `Zod`, `Pino`          | `Vitest`, `Supertest`, `ESLint`, `dprint` |
 
 ### Structure
 
@@ -319,7 +319,7 @@ La compatibilidad con Node se mantiene para que el template sea más universal, 
 
 | Runtime                            | HTTP                  | Validación y logging | Calidad                                   |
 | ---------------------------------- | --------------------- | -------------------- | ----------------------------------------- |
-| `Bun`, `Node.js 20+`, `TypeScript` | `Bun HTTP`, `Express` | `Zod`, `Pino`        | `Vitest`, `Supertest`, `ESLint`, `dprint` |
+| `Bun`, `Node.js 24+`, `TypeScript` | `Bun HTTP`, `Express` | `Zod`, `Pino`        | `Vitest`, `Supertest`, `ESLint`, `dprint` |
 
 ### Estructura
 

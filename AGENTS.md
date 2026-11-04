@@ -9,7 +9,7 @@ Node compatibility is intentionally preserved, but Bun is the preferred runtime 
 
 ## Stack and commands
 
-Bun · Node.js 20+ · TypeScript (strict) · Express · Zod · Pino / Pino HTTP · Vitest · ESLint · dprint.
+Bun · Node.js 24+ · TypeScript (strict) · Express · Zod · Pino / Pino HTTP · Vitest · ESLint · dprint.
 
 - `bun install` · `bun run dev` · `bun run start` · `bun run build`
 - `bun run lint` (ESLint + `scripts/dead-code.mjs`) · `bun run test` · `bun run test:coverage`

@@ -85,7 +85,7 @@ function createExpressHttpRequest(request: Request): HttpRequest {
         headers: normalizeExpressHeaders(request.headers),
         method: request.method,
         params: request.params as Record<string, string>,
-        query: request.query as Record<string, unknown>,
+        query: request.query,
         url: request.originalUrl || request.url
     };
 
